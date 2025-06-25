@@ -1,0 +1,55 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    height: 100%;
+}
+body{
+    background-color: lightgrey;
+    height: 100%;
+    margin: 0;
+}
+
+/*Element Styles*/
+canvas{
+    border: solid 1px black;
+}
+hr{
+    border: none;
+    border-top: dashed 1px black;
+}
+
+/*Navigation styles*/
+.nav{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-content: space-between;
+}
+.nav li{
+    padding: 4px 0;
+}
+.nav li:not(:last-child):after{ 
+    content: "/";
+    padding: 0 8px;
+}
+
+
+/*Page structure styles*/
+.container{
+    width: 1024px;
+    height: 100%;
+    margin: auto;
+    padding: 6px;
+    background-color: white;
+}
+.row{
+    display: flex;
+}
+.col{
+    flex: 1;
+}
+.col:not(:first-child){
+    padding-left: 6px;
+}

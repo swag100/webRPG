@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+    head
+        title webRPG
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        div(class='container')
+            // header
+            include elements/header.pug
+
+            // body
+            div(class='row')
+                div
+                    include elements/game.pug
+                div(class='col')
+                    include elements/sidebar.pug
+            
+            hr
+
+            // footer
+            include elements/footer.pug
