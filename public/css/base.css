@@ -26,6 +26,20 @@ a img{
     display: inline-block;
 }
 
+/*Form styles*/
+form label{
+    display: inline-block;
+    text-align: right;
+    width: 110px;
+    margin-right: 6px;
+}
+form section{
+    margin: 4px 0;
+}
+form a{
+    padding: 0 4px;
+}
+
 /*Header*/
 .top{
     display: flex;

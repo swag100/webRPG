@@ -1,0 +1,12 @@
+/*Form styles*/
+form label{
+    display: inline-block;
+    text-align:unset;
+    width: 100%;
+}
+form label:empty{
+    display: none;
+}
+form input:not([type='submit']){
+    width: 100%;
+}
