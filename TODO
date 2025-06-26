@@ -8,3 +8,27 @@ This includes character appearence, what room they're in, their stats, health, a
  The client (including websocket stuff) should come after users can register and 
  their sessions are saved;
  this is so only LOGGED IN USERS can actually be present in the world
+
+
+
+/* Some Interesting Thoughts To Consider */
+/*
+Clients send INPUTS to the server, and the server does the logic for every player
+Prevents clients from hacking, but seems intense on server
+
+Also, where would a good place be for game server logic?
+Like how would i make it ONLY be happening on pages with a canvas?
+*/
+
+//useing sessions
+//const session = require('express-session');
+/*app.use(session({
+    secret: process.env.SESS_KEY,
+    resave: false,
+    saveUninitialized: false
+}));*/
+/*app.post('/get-data', (req, res) => {
+    const username = req.session.username;
+    const loggedIn = req.session.loggedIn;
+    res.send(`Username: ${username}, Logged In: ${loggedIn}`);
+});*/

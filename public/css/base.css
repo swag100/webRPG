@@ -18,23 +18,42 @@ hr{
     border: none;
     border-top: dashed 1px black;
 }
+legend{
+    font-weight: bold;
+}
+a img{
+    vertical-align: bottom; 
+    display: inline-block;
+}
 
-/*Navigation styles*/
+/*Header*/
+.top{
+    display: flex;
+}
+
+/*Navigation*/
 .nav{
     display: flex;
     list-style: none;
+    align-content: space-between;
     margin: 0;
     padding: 0;
-    align-content: space-between;
-}
-.nav li{
-    padding: 4px 0;
 }
 .nav li:not(:last-child):after{ 
     content: "/";
-    padding: 0 8px;
+    padding: 0 6px;
 }
 
+/*Main nav*/
+.nav.main{
+    margin: 3px 0;
+    padding: 2px;
+    background-color: wheat;
+}
+/*Util nav*/
+.nav.util{
+    margin-left: auto;
+}
 
 /*Page structure styles*/
 .container{

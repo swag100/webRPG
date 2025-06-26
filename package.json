@@ -1,9 +1,9 @@
 {
   "name": "webrpg",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node src/index.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,9 +1,17 @@
 div(class='header')
-    a(href="/") 
-        img(src='img/WebRpg.png')
-    span Friends
+    div(class='top')
+        a(href="/") 
+            img(src='img/WebRpg.png')
+        
+        //span I am a cool tagline
 
-    ul(class='nav')
-        li: a(href='/') Home
-        li: a(href='/about') What?
-        li: a(href='/contact') Contact
+        ul(class='nav util')
+            li: a(href='/register') Register
+            li: a(href='/login') Log In
+            li: a(href='/help') Help
+
+    div(class='bottom')
+        ul(class='nav main')
+            li: a(href='/') Home
+            li: a(href='/about') About
+            li: a(href='/contact') Contact

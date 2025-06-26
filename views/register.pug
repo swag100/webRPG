@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        include elements/head.pug
+    body
+        div(class='container')
+            // header
+            include elements/header.pug
+            
+            // body
+            div(class='row')
+                div(class='col')
+                    h1 Register an Account
+                div(class='col')
+                    include elements/registerbox.pug
+
+            // footer
+            include elements/footer.pug

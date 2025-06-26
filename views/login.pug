@@ -6,22 +6,13 @@ html(lang="en")
         div(class='container')
             // header
             include elements/header.pug
-
+            
             // body
             div(class='row')
-                // lacks col class due to set width
-                div
-                    include elements/game.pug
-
-                // sidebar!
                 div(class='col')
-                    // instructions, chat, login form
+                    h1 Log Into Your Account
+                div(class='col')
                     include elements/loginbox.pug
-
-                    fieldset
-                        legend Live Chat 
-                        div
-                            small: em This feature doesn't exist.
 
             // footer
             include elements/footer.pug
