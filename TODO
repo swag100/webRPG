@@ -1,0 +1,10 @@
+Create structure for user registration and logging in
+This involves letting them sign up and storing their info in the database
+
+Find out how I'd store the user's character information
+This includes character appearence, what room they're in, their stats, health, and so on
+
+*Important to focus on serverside BEFORE clientside; 
+ The client (including websocket stuff) should come after users can register and 
+ their sessions are saved;
+ this is so only LOGGED IN USERS can actually be present in the world
