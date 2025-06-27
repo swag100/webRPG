@@ -1,10 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var crypto = require('crypto');
-var db = require('../db');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const crypto = require('crypto');
+const zlib = require('node:zlib');
+const db = require('../db');
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
     db.query('SELECT * FROM user WHERE username = ?', [ username ], function(err, results) {
@@ -14,10 +15,13 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
         const row = results[0]; // This query returns an array
 
         console.log(row, row.password_hash, row.password_salt);
+        const unpacked_hash = JSON.parse(zlib.unzipSync(Buffer.from(row.password_hash, 'base64')));
+        const unpacked_salt = JSON.parse(zlib.unzipSync(Buffer.from(row.password_salt, 'base64')));
+        console.log(unpacked_hash, unpacked_salt);
         
-        crypto.pbkdf2(password, row.password_salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+        crypto.pbkdf2(password, unpacked_salt, 310000, 32, 'sha256', function(err, password_hash) {
             if (err) return cb(err);
-            if (!crypto.timingSafeEqual(row.password_hash, hashedPassword)) {
+            if (!crypto.timingSafeEqual(unpacked_hash, password_hash)) {
                 return cb(null, false, { message: 'Incorrect username or password.' });
             }
             return cb(null, row);

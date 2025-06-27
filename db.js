@@ -1,6 +1,8 @@
 const mysql = require('mysql2')
 const crypto = require('crypto');
+const zlib = require('node:zlib');
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 //WE CAN QUERY THE DATABASE WOOOHOOOO
@@ -28,8 +30,8 @@ connection.query(
         user_id INT NOT NULL AUTO_INCREMENT,
         username VARCHAR(16) NOT NULL,
         email VARCHAR(255) NULL,
-        password_hash VARCHAR(32) NOT NULL,
-        password_salt VARCHAR(32) NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        password_salt VARCHAR(255) NOT NULL,
         create_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (user_id),
         UNIQUE (username)
@@ -38,10 +40,11 @@ connection.query(
   
 // create an initial user (username: alice, password: letmein)
 const salt = crypto.randomBytes(16);
+const hash = crypto.pbkdf2Sync('letmein', salt, 310000, 32, 'sha256');
 connection.query('INSERT IGNORE INTO user (username, password_hash, password_salt) VALUES (?, ?, ?)', [
     'alice',
-    crypto.pbkdf2Sync('letmein', salt, 310000, 32, 'sha256'),
-    salt
+    zlib.gzipSync(JSON.stringify(hash)).toString('base64'),
+    zlib.gzipSync(JSON.stringify(salt)).toString('base64')
 ]);
 
 module.exports = connection;
