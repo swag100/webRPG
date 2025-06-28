@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
 const path = require('path');
 
 const MySQLStore = require('express-mysql-session')(session);
@@ -24,13 +25,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-/*app.use(session({
-    secret: 'apple',
+app.use(session({
+    secret: process.env.DB_PASSWORD,
     resave: false,
     saveUninitialized: false,
-    store: new MySQLStore({}/session store options/, db)
+    cookie: { secure: true },
+    store: new MySQLStore(db.options, db)
 }));
-app.use(passport.authenticate('session'));*/
+app.use(passport.authenticate('session'));
 app.listen(process.env.PORT, () => {
     console.log(`http://localhost:${process.env.PORT}/`);
 })

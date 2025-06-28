@@ -1,17 +1,17 @@
-const mysql = require('mysql2')
 const crypto = require('crypto');
 const zlib = require('node:zlib');
+const mysql = require('mysql2')
 const dotenv = require('dotenv');
-
 dotenv.config();
 
 //WE CAN QUERY THE DATABASE WOOOHOOOO
 //get connection
-const connection = mysql.createConnection({
+const options = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD
-});
+};
+const connection = mysql.createConnection(options);
 
 //Instantiate the connection
 connection.connect(function (err) {
@@ -37,6 +37,10 @@ connection.query(
         UNIQUE (username)
     );`
 );
+
+// set connection options (experiment!)
+connection.options = options;
+connection.options.database = process.env.DB_NAME;
   
 // create an initial user (username: alice, password: letmein)
 const salt = crypto.randomBytes(16);

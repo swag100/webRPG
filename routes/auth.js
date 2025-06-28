@@ -12,22 +12,33 @@ passport.use(new LocalStrategy(function verify(username, password, cb) {
         if (err) return cb(err);
         if (!results) return cb(null, false, { message: 'User does not exist.' });
 
-        const row = results[0]; // This query returns an array
-
-        console.log(row, row.password_hash, row.password_salt);
-        const unpacked_hash = JSON.parse(zlib.unzipSync(Buffer.from(row.password_hash, 'base64')));
-        const unpacked_salt = JSON.parse(zlib.unzipSync(Buffer.from(row.password_salt, 'base64')));
-        console.log(unpacked_hash, unpacked_salt);
+        const user = results[0]; // This query returns an array
+        const unpacked_hash = Buffer.from(JSON.parse(zlib.unzipSync(Buffer.from(user.password_hash, 'base64'))));
+        const unpacked_salt = Buffer.from(JSON.parse(zlib.unzipSync(Buffer.from(user.password_salt, 'base64'))));
         
         crypto.pbkdf2(password, unpacked_salt, 310000, 32, 'sha256', function(err, password_hash) {
             if (err) return cb(err);
+
             if (!crypto.timingSafeEqual(unpacked_hash, password_hash)) {
-                return cb(null, false, { message: 'Incorrect username or password.' });
+                return cb(null, false, { message: 'Incorrect Password' });
             }
-            return cb(null, row);
+
+            return cb(null, user);
         });
     });
 }));
+
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+        cb(null, { id: user.id, username: user.username });
+    });
+});
+
+passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+        return cb(null, user);
+    });
+});
 
 //register
 router.get('/register', function(req, res, next) {
@@ -45,9 +56,7 @@ router.post('/login', (req, res, next) => {
         failureRedirect: '/login',
         failureMessage: true
     }, (err, user, info) => {
-
         // handle succes or failure
-
     })(req, res, next); 
 });
 
